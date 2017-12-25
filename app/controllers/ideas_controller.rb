@@ -9,6 +9,7 @@ class IdeasController < ApplicationController
   end
 
   def create
+    byebug
     idea = Idea.create(idea_params)
     render json: idea
   end
@@ -19,9 +20,15 @@ class IdeasController < ApplicationController
     render json: idea
   end
 
-  def delete
+  def destroy
     idea = Idea.find(params[:id])
     idea.destroy
     render json: idea
+  end
+
+  private
+
+  def idea_params
+    params.require(:idea).permit(:title, :body)
   end
 end

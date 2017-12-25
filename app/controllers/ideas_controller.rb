@@ -9,7 +9,6 @@ class IdeasController < ApplicationController
   end
 
   def create
-    byebug
     idea = Idea.create(idea_params)
     render json: idea
   end

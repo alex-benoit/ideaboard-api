@@ -1,6 +1,6 @@
 class IdeasController < ApplicationController
   def index
-    render json: Idea.all
+    render json: Idea.order(created_at: :desc)
   end
 
   def show
@@ -9,14 +9,21 @@ class IdeasController < ApplicationController
   end
 
   def create
-    idea = Idea.create(idea_params)
-    render json: idea
+    idea = Idea.new(idea_params)
+    if idea.save
+      render json: idea, status: :created
+    else
+      render status: :bad_request
+    end
   end
 
   def update
     idea = Idea.find(params[:id])
-    idea.update(idea_params)
-    render json: idea
+    if idea.update(idea_params)
+      render json: idea
+    else
+      render status: :bad_request
+    end
   end
 
   def destroy

@@ -1,6 +1,10 @@
 class IdeasController < ApplicationController
   def index
-    render json: Idea.order(created_at: :desc)
+    if params[:order] == 'title'
+      render json: Idea.order('lower(title) ASC')
+    else
+      render json: Idea.order(created_at: :desc)
+    end
   end
 
   def show
